@@ -47,14 +47,11 @@ class Transaction {
 public class StreamTest2 {
 
     public static boolean isPrime(int number) {
-        if (number <= 1) {
-            return false;
-        }
+        if (number <= 1) return false;
 
-        for (int i = 2; i <= Math.sqrt(number); i++) {
-            if (number % i == 0) {
-                return false;
-            }
+        int limit = (int) Math.sqrt(number); // performance improvement - If no divisor is found up to sqrt of number, none will exist beyond it.
+        for (int i = 2; i <= limit; i++) {
+            if (number % i == 0) return false;
         }
         return true;
     }
