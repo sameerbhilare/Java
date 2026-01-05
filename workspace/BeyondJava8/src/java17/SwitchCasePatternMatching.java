@@ -47,7 +47,7 @@ public class SwitchCasePatternMatching {
     public static String getResultWithGuard(Object value){
         return switch(value){
             case String s -> "A String of length :  "+s.length();
-            case List list && (list.size() > 10000) -> "A large list of size : "+ list.size();
+            //case List list && (list.size() > 10000) -> "A large list of size : "+ list.size();
             case List list -> "A list of size : "+ list.size();
             case Map map -> "A map(key,value) of size : "+ map.size();
             case Set set -> "A set, unique elements : " + set.size();
