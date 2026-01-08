@@ -1,5 +1,7 @@
 package streams;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -80,5 +82,54 @@ public class StreamTest4 {
                                                 .findFirst()
                                 ))));
         System.out.println("Second highest salary for each department => " +secondHighestSalaryByDepartment);
+
+        /* 3. Third Most Frequent Element
+        Problem:
+            Given an array of integers arr[], find the element that has the third highest frequency.
+            If multiple elements have the same frequency, choose the largest numerical value among them.
+            If fewer than 3 distinct frequency levels exist, return -1.
+
+        Constraints:
+            Ignore negative numbers.
+
+        Input:
+            int arr[] = {4, 4, 1, 2, 2, 3, 3, 3, 5, 5, 5, 5};
+
+        Output:
+            4
+         */
+        int arr[] = {4, 4, 1, 2, 2, 3, 3, 3, 5, 5, 5, 5};
+
+        int result =
+                Arrays.stream(arr)
+                        .filter(n -> n >= 0) // ignore negatives
+                        // must be boxed bcz groupingBy() required Object stream, and without boxed() we get primitive stream (IntStream)
+                        .boxed()
+                        .collect(Collectors.groupingBy(
+                                n -> n,
+                                Collectors.counting()
+                        ))
+                        .entrySet()
+                        .stream()
+
+                        // group numbers by frequency
+                        .collect(Collectors.groupingBy(
+                                Map.Entry::getValue,
+                                Collectors.mapping(Map.Entry::getKey, Collectors.toList())
+                        ))
+                        .entrySet()
+                        .stream()
+
+                        // sort frequencies descending
+                        .sorted(Map.Entry.<Long, List<Integer>>comparingByKey(Comparator.reverseOrder()))
+                        .skip(2) // third highest frequency
+                        .findFirst()
+
+                        // pick the largest number among same frequency
+                        .map(e -> Collections.max(e.getValue()))
+                        .orElse(-1);
+
+        System.out.println(result);
+
     }
 }
