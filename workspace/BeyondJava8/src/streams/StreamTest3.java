@@ -52,6 +52,9 @@ public class StreamTest3 {
 
         long count2 = strings3.stream()
                 .filter(str -> str.contains(target2))
+                //.map(str -> str.split(""))
+                //.flatMap(Arrays::stream)
+                // using below line instead of above 2 commented lines
                 .flatMap(str -> Arrays.stream(str.split("")))
                 .filter(s -> s.equals(target2))
                 .count();
