@@ -166,7 +166,7 @@ public class StreamTest4 {
                 // reverse the map - create map of occurrence and list of items which this occurrence. The list is sorted by Lexicographic order
                 .collect(Collectors.groupingBy(
                         Map.Entry::getValue,
-                        Collectors.mapping(entry -> entry.getKey(),
+                        Collectors.mapping(Map.Entry::getKey,
                                 Collectors.collectingAndThen(
                                         Collectors.toList(),
                                         list -> list.stream().sorted().collect(Collectors.toList())
