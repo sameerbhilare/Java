@@ -1,6 +1,7 @@
 package streams;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -130,6 +131,62 @@ public class StreamTest4 {
                         .orElse(-1);
 
         System.out.println(result);
+
+
+        /*
+        4.Find popular top N items from a list.
+
+        Find top N items based on number of occurrences of each string.
+        The items should be case-insensitive. e.g. Apple and apple should be treated as same.
+        If there are multiple items for any popularity, the items should be sorted in Lexicographic order.
+        And items from this list of multiple items should also be considered for showing top N popular items.
+
+        Example - 1
+        Items: ["apple", "banana", "apple", "orange", "grape", "banana", "orange", "orange", "orange", "banana", "banana"]
+        N = 2
+        output - ["Banana", "Orange"]
+
+        Example - 2
+        Items: ["Cherry", "apple", "apple", "mango", "banana", "grapes", "mango"]
+        N = 2
+        output - ["Apple", "Mango"]
+         */
+        List<String> items = Arrays.asList("Apple", "apple", "Mango", "mango", "Mango", "cherry", "Banana",
+                "banana", "banana", "Apple", "cherry", "Cherry", "Grapes");
+        int n = 3;
+
+        List<String> topNItems = items.parallelStream()
+
+                // create map of item and its occurrence
+                .collect(Collectors.groupingBy(String::toLowerCase, Collectors.counting()))
+                .entrySet()
+                .stream()
+                .peek(System.out::println) // log
+
+                // reverse the map - create map of occurrence and list of items which this occurrence. The list is sorted by Lexicographic order
+                .collect(Collectors.groupingBy(
+                        Map.Entry::getValue,
+                        Collectors.mapping(entry -> entry.getKey(),
+                                Collectors.collectingAndThen(
+                                        Collectors.toList(),
+                                        list -> list.stream().sorted().collect(Collectors.toList())
+                                )
+                        )
+                ))
+                .entrySet()
+                .stream()
+                .peek(System.out::println) // see
+
+                // sort the map by key (number of occurrences) desc.
+                .sorted(Map.Entry.<Long, List<String>>comparingByKey().reversed())
+                .map(Map.Entry::getValue)
+
+                // flatten the stream so that we get all items ordered by popularity desc
+                .flatMap(Collection::stream)
+                .limit(n) // skip N
+                .collect(Collectors.toList());
+
+        System.out.println("topNItems => " + topNItems);
 
     }
 }
