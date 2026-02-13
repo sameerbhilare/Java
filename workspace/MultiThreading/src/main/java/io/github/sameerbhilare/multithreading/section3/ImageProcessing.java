@@ -27,7 +27,7 @@ public class ImageProcessing {
         //recolorSingleThreaded(originalImage, resultImage);
 
         /**
-         * Multithreaded - useful till number of thread is less than CPU cores. Counter-productive if number of threads are too much.
+         * Multithreaded - useful till number of thread is less than or equal to CPU cores. Counter-productive if number of threads are too much.
          */
         int numberOfThreads = 1;
         recolorMultithreaded(originalImage, resultImage, numberOfThreads);
