@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ImageProcessing {
+
+    // Goal is to recolor gray shades in the source image to purple shades and save the result in destination file.
+    // We will compare the time taken by single threaded and multi-threaded implementation.
     public static final String SOURCE_FILE = "src/main/resources/many-flowers.jpg";
     public static final String DESTINATION_FILE = "D:\\DEV\\Java\\workspace\\MultiThreading\\many-flowers.jpg";
 
@@ -93,6 +96,7 @@ public class ImageProcessing {
         int newGreen;
         int newBlue;
 
+        // only paint shades of gray. If the pixel is not shade of gray then keep it as it is.
         if(isShadeOfGray(red, green, blue)) {
             newRed = Math.min(255, red + 10);
             newGreen = Math.max(0, green - 80);
@@ -114,6 +118,11 @@ public class ImageProcessing {
         return Math.abs(red - green) < 30 && Math.abs(red - blue) < 30 && Math.abs( green - blue) < 30;
     }
 
+    /**
+     * RGB value is stored in 4 bytes. First byte is for alpha, second for red, third for green and fourth for blue.
+     * So to create RGB value we need to shift the red value to left by 16 places, green value to left by 8 places and blue value will be as it is.
+     * We also need to set the alpha/transparency value to 255 (fully opaque) which is done by masking the first byte with 0xFF000000.
+     */
     public static int createRGBFromColors(int red, int green, int blue) {
         int rgb = 0;
 
@@ -126,6 +135,12 @@ public class ImageProcessing {
         return rgb;
     }
 
+    /**
+     * RGB value is stored in 4 bytes. First byte is for alpha, second for red, third for green and fourth for blue.
+     * So to get the red value we need to mask the first byte and then shift the bits to right by 16 places.
+     * Similarly for green we need to mask the first and second byte and then shift the bits to right by 8 places.
+     * For blue we just need to mask the first three bytes.
+     */
     public static int getRed(int rgb) {
         return (rgb & 0x00FF0000) >> 16;
     }
