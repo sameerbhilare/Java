@@ -52,7 +52,7 @@ public class BarrierUsingSemaphore {
             }
 
             if (isLastWorker) {
-                semaphore.release(numberOfWorkers-1); // last thread to reach the barrier releases all the other threads that are waiting on the semaphore.
+                semaphore.release(numberOfWorkers-1); // last (5th) thread to reach the barrier releases all the other (4) threads that are waiting on the semaphore.
             } else {
                 semaphore.acquire(); // if numberOfThreads = 5, 4 threads will be blocked here, and the last thread to reach the barrier will release all of them.
             }
