@@ -1,6 +1,6 @@
 package io.github.sameerbhilare.multithreading.section5;
 
-public class Main {
+public class InventoryCounterProblem {
     public static void main(String[] args) throws InterruptedException {
         InventoryCounter inventoryCounter = new InventoryCounter();
         IncrementingThread incrementingThread = new IncrementingThread(inventoryCounter);
@@ -50,11 +50,11 @@ public class Main {
     private static class InventoryCounter {
         private int items = 0;
 
-        public void increment() {
+        public synchronized void increment() {
             items++;
         }
 
-        public void decrement() {
+        public synchronized void decrement() {
             items--;
         }
 
