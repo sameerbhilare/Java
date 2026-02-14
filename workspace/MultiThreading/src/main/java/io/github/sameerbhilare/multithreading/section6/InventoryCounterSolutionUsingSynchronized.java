@@ -1,6 +1,6 @@
 package io.github.sameerbhilare.multithreading.section6;
 
-public class Main {
+public class InventoryCounterSolutionUsingSynchronized {
     public static void main(String[] args) throws InterruptedException {
         InventoryCounter inventoryCounter = new InventoryCounter();
         IncrementingThread incrementingThread = new IncrementingThread(inventoryCounter);
