@@ -19,17 +19,18 @@ public class IoBoundApplicationV2 {
     }
 
     private static void performTasks() {
-        ExecutorService executorService = Executors.newFixedThreadPool(1000);
+        try(ExecutorService executorService = Executors.newFixedThreadPool(1000)) {
 
-        for (int i = 0; i < NUMBER_OF_TASKS; i++) {
-            executorService.submit(new Runnable() {
-                @Override
-                public void run() {
-                    for (int j = 0; j < 100; j++) {
-                        blockingIoOperation();
+            for (int i = 0; i < NUMBER_OF_TASKS; i++) {
+                executorService.submit(new Runnable() {
+                    @Override
+                    public void run() {
+                        for (int j = 0; j < 100; j++) {
+                            blockingIoOperation();
+                        }
                     }
-                }
-            });
+                });
+            }
         }
     }
 

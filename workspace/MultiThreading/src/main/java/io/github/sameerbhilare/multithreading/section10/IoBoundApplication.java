@@ -20,10 +20,11 @@ public class IoBoundApplication {
     }
 
     private static void performTasks() {
-        ExecutorService executorService = Executors.newCachedThreadPool();
+        try(ExecutorService executorService = Executors.newCachedThreadPool()) {
 
-        for (int i = 0; i < NUMBER_OF_TASKS; i++) {
-            executorService.submit(() ->  blockingIoOperation());
+            for (int i = 0; i < NUMBER_OF_TASKS; i++) {
+                executorService.submit(() -> blockingIoOperation());
+            }
         }
     }
 
