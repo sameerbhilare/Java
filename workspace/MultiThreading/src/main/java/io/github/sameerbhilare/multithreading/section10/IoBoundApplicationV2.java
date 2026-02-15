@@ -4,6 +4,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /*
+    Example: Too many threads with shorter blocking time.
+
     Simulating blocking IO tasks using fixed thread pool of 1000 threads.
     This is not an optimal solution as we are creating a lot of threads which are mostly idle and waiting for the blocking IO to complete.
  */

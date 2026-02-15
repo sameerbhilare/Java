@@ -4,6 +4,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /*
+    Example: Multiple threads with longer blocking time.
+
     Simulating Blocking calls using Thread.sleep() and using a CachedThreadPool to execute the tasks.
     CachedThreadPool will create new threads as needed, and reuse previously constructed threads when they are available.
     This is ideal for IO-bound tasks that may block for a long time, as it allows for a large number of concurrent tasks without exhausting system resources.
