@@ -239,7 +239,9 @@ public class StreamTest1 {
         Map<String, Double> out12 = list.stream()
                 .collect(Collectors.groupingBy(
                         Student::getDepartmentName,
-                        Collectors.averagingDouble(Student::getRank)
+                        Collectors.averagingInt(Student::getRank)
+                        // Collectors.averagingDouble(Student::getRank) also works fine here.
+                        // Ideally for int fields we should use averagingInt() and for double fields we should use averagingDouble()
                 ));
 
         System.out.println(out12);
